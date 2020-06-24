@@ -1,1 +1,5 @@
-exports.createTodo = () => {};
+const TodoModel = require('../models/todo');
+
+exports.createTodo = () => {
+    TodoModel.create();
+};
