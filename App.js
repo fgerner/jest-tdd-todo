@@ -1,11 +1,15 @@
 const express = require('express');
-const port = process.env.PORT || 3000;
+const todoRoutes = require('./routes/todo');
+const mongoDb = require('./database/connect');
 const app = express();
+
+mongoDb.connect();
+
+app.use(express.json());
+app.use('/todos', todoRoutes)
 
 app.get('/', (req, res) => {
     res.json('hello');
 });
 
-app.listen(port, () => {
-    console.log('Server running on ' + port);
-})
+module.exports = app;
