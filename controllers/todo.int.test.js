@@ -6,6 +6,12 @@ const endpoint = "/todos/";
 
 
 describe(endpoint, () => {
+    it('GET' + endpoint, async () => {
+        const response = await request(app).get(endpoint);
+        expect(response.statusCode).toBe(200);
+        expect(response.body[0].title).toBeDefined();
+        expect(response.body[0].done).toBeDefined();
+    });
     it('POST' + endpoint, async () => {
         const response = await request(app)
             .post(endpoint)
