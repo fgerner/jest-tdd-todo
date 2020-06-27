@@ -3,7 +3,7 @@ const app = require('../App');
 const newTodo = require('../controllers/mock-data/new-todo.json');
 
 const endpoint = "/todos/";
-
+let firstTodo;
 
 describe(endpoint, () => {
     it('GET' + endpoint, async () => {
@@ -11,7 +11,18 @@ describe(endpoint, () => {
         expect(response.statusCode).toBe(200);
         expect(response.body[0].title).toBeDefined();
         expect(response.body[0].done).toBeDefined();
+        firstTodo = response.body[0];
     });
+    it("GET by id" + endpoint, async () => {
+        const response = await request(app).get(endpoint + firstTodo._id);
+        expect(response.statusCode).toBe(200);
+        expect(response.body.title).toBe(firstTodo.title);
+        expect(response.body.done).toBe(firstTodo.done);
+    });
+    it('GET when id dosen\'t exist', async () => {
+        const response = await request(app).get(endpoint + '5ef48aa92cee9f2c69f3128d');
+        expect(response.statusCode).toBe(404);
+    })
     it('POST' + endpoint, async () => {
         const response = await request(app)
             .post(endpoint)
