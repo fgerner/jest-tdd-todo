@@ -35,9 +35,21 @@ exports.updateTodo = async (req, res, next) => {
             useFindAndModefy: false
         });
         if (updatedTodo) {
-            res.send(200).json(updatedTodo);
-        }else {
+            res.sendStatus(200).then(res.json(updatedTodo));
+        } else {
             res.status(404).send();
+        }
+    } catch (err) {
+        next(err);
+    }
+};
+exports.deleteTodo = async (req, res, next) => {
+    try {
+        const deletedTodo = await TodoModel.findByIdAndDelete(req.params.todoId);
+        if (deletedTodo) {
+            res.send(200).json(deletedTodo);
+        } else {
+            res.sendStatus(404).send();
         }
     } catch (err) {
         next(err);

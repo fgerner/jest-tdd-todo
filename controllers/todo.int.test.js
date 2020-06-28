@@ -45,7 +45,9 @@ describe(endpoint, () => {
             .put(endpoint + newTodoId)
             .send(testData);
         expect(res.statusCode).toBe(200);
-        // expect(res.body.title).toBe(testData.title)
-        // expect(res.body.done).toBe(testData.done)
+    });
+    it('DELETE ' + endpoint, async () => {
+        const response = await request(app).delete(endpoint + newTodoId);
+        expect(response.statusCode).toBe(200);
     })
 })
