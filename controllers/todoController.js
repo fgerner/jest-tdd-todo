@@ -34,8 +34,12 @@ exports.updateTodo = async (req, res, next) => {
             new: true,
             useFindAndModefy: false
         });
-        res.send(200).json(updatedTodo);
-    }catch (err) {
+        if (updatedTodo) {
+            res.send(200).json(updatedTodo);
+        }else {
+            res.status(404).send();
+        }
+    } catch (err) {
         next(err);
     }
 };

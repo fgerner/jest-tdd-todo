@@ -44,7 +44,14 @@ describe('TodoController.updateTodo', () => {
         TodoModel.findByIdAndUpdate.mockReturnValue(rejectedPromise);
         await TodoController.updateTodo(req, res, next);
         expect(next).toBeCalledWith(errorMessage);
+    });
+    it('should return 404 if todo not found', async () => {
+        TodoModel.findByIdAndUpdate.mockReturnValue(null);
+        await TodoController.updateTodo(req, res, next);
+        expect(res.statusCode).toBe(404);
+        expect(res._isEndCalled).toBeTruthy();
     })
+
 })
 
 describe('TodoController.getTodoById', () => {
